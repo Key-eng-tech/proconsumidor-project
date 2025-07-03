@@ -20,23 +20,4 @@ use App\Http\Controllers\API\ProviderController;
 use App\Http\Controllers\API\SectorController;
 use App\Http\Controllers\API\UserController;
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::apiResources([
-        'branches' => BranchController::class,
-        'claims' => ClaimController::class,
-        'claims-from' => ClaimFromController::class,
-        'claim-statuses' => ClaimStatusController::class,
-        'claim-updates' => ClaimUpdateController::class,
-        'consumers' => ConsumerController::class,
-        'departments' => DepartmentController::class,
-        'entry-ways' => EntryWayController::class,
-        'motives' => MotiveController::class,
-        'municipios' => MunicipioController::class,
-        'offices' => OfficeController::class,
-        'product-types' => ProductTypeController::class,
-        'profiles' => ProfileController::class,
-        'providers' => ProviderController::class,
-        'sectors' => SectorController::class,
-        'users' => UserController::class,
-    ]);
-});
+Route::middleware('auth:sanctum')->group(function () {});
