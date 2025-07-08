@@ -1,28 +1,37 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Str;
 
+$controllers = [
+    'users'          => 'UserController',
+    'sectors'        => 'SectorController',
+    'provinces'      => 'ProvinceController',
+    'providers'      => 'ProviderController',
+    'profiles'       => 'ProfileController',
+    'producttypes'   => 'ProductTypeController',
+    'offices'        => 'OfficeController',
+    'claimstatuses'  => 'ClaimStatusController',
+    'municipios'     => 'MunicipioController',
+    'motives'        => 'MotiveController',
+    'entryways'      => 'EntryWayController',
+    'departments'    => 'DepartmentController',
+    'consumers'      => 'ConsumerController',
+    'claimupdates'   => 'ClaimUpdateController',
+    'claimfroms'     => 'ClaimFromController',
+    'claims'         => 'ClaimController',
+    'branches'       => 'BranchController',
+];
 
-$models = ['User', 'Product', 'Sector', 'Province', 'Provider', 'Profile', 'ProductType', 'Office',
-           'Municipio', 'Motive', 'EntryWay', 'Department', 'Consumer', 'ClaimUpdate', 'ClaimStatus', 'ClaimFrom', 'Claim', 'Branch']; // Lista de modelos 
+Route::middleware('auth:sanctum')->group(function () use ($controllers) {
 
-Route::middleware('auth:sanctum')->group(function () use 
-($models) {  
+    foreach ($controllers as $routeName => $controller) {
+        $controllerClass = "App\\Http\\Controllers\\API\\{$controller}";
 
-foreach ($models as $model) {
-    $controller = "App\\Http\\Controllers\API\{$model}Controller";
-    if (class_exists($controller)){
-        $routeName = strtolower(Str::plural($model));
-        Route::resource($routeName, $controller)->except(['create', 'edit']);
-
-    } else {
-
-         logger("Controlador {$controller} no encontrado.");
+        if (class_exists($controllerClass)) {
+            Route::resource($routeName, $controllerClass)->except(['create', 'edit']);
+        } else {
+            logger("Controlador {$controllerClass} no encontrado.");
+        }
     }
-
-    // Verifica si el controlador existe antes de definir una ruta
-    Route::resource($routeName, $controller);
-}
 
 });
