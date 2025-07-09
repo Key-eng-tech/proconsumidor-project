@@ -1,6 +1,11 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\LoginController;
+
+// Ruta pública para login que devuelve token
+Route::post('/login', [LoginController::class, 'login'])->name('login');
+
 
 $controllers = [
     'users'          => 'UserController',
