@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Resources\UserResource;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth; // Importar facade Auth
@@ -13,21 +14,24 @@ class LoginController extends Controller
 {
     public function login(LoginRequest $request): JsonResponse
     {
+         Log::info("Usuario->email autenticado exitosamente.");
         try {
             // Autenticar usuario y validar rate limiting
             $request->authenticate();
 
             // Usar facade Auth para evitar warning de Intelephense
-            $user = Auth::user();
+            // $user = Auth::user();
 
-            dd(get_class($user));
+            $user = User::where('email', $request->email)->first();
+
+            // dd(get_class($user));
             // Verificar si el usuario está activo
 
             // Crear token con scopes (opcional)
             $token = $user->createToken('api-token', ['*'])->plainTextToken;
 
             // Registrar login exitoso
-            Log::info("Usuario {$user->email} autenticado exitosamente.");
+           Log::info("Usuario {$user->email} autenticado exitosamente.");
 
             return response()->json([
                 'status' => 'success',
