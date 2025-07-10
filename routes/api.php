@@ -25,6 +25,7 @@ $controllers = [
     'claimfroms'     => 'ClaimFromController',
     'claims'         => 'ClaimController',
     'branches'       => 'BranchController',
+    'rols'           => 'RolController',
 ];
 
 Route::middleware('auth:sanctum')->group(function () use ($controllers) {
